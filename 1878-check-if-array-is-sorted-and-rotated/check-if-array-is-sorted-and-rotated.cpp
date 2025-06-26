@@ -10,8 +10,6 @@ class Solution {
                     if(nums[0]<nums[n-1])cnt++;
                 }
             }
-
-            if(cnt < 2)return true;
-            return false;
+            return cnt < 2;
         }
 };
