@@ -12,6 +12,14 @@ public:
             } else cnt--;
         }
 
-        return me;
+        cnt = 0;
+
+        for(auto x: nums){
+            if(x==me)cnt++;
+        }
+
+        if(cnt>nums.size()/2)return me;
+
+        return -1;
     }
 }; 
