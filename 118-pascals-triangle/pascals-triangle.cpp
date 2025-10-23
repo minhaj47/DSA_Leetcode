@@ -1,24 +1,19 @@
 class Solution {
 public:
-
-    int funcNCR(int n, int r){
-        long long ans = 1;
-        for(int i=0; i<r; i++){
-            ans*=(n-i);
-            ans/=(i+1);
-        }
-        return ans;
-    }
     vector<vector<int>> generate(int numRows) {
         vector<vector<int>>ans;
 
-        for(int i=0; i<numRows; i++){
+        for(int row=1; row<=numRows; row++){
             vector<int>temp;
-            for(int j=0; j<=i; j++){
-                temp.push_back(funcNCR(i, j));
+            long long x = 1;
+            temp.push_back(x);   // 1st element
+
+            for(int col=1; col<row; col++){     // 2nd -> nth element
+                x = x * (row - col);
+                x/=col;
+                temp.push_back(x);
             } ans.push_back(temp);
         }
         return ans;
     }
-
 };
