@@ -2,22 +2,22 @@ class Solution {
 public:
     int trap(vector<int>& height) {
         int n = height.size();
-        vector<int>rightMax(n);
 
-        int leftMax = height[0];
-        rightMax[n-1] = 0;
+        int leftMax = height[0], rightMax = height[n-1];
+        int l = 1, r = n-2, water = 0;
 
-
-        for(int i=n-2; i>=0; i--){
-            rightMax[i] = max(rightMax[i+1], height[i+1]);
-        } cout << endl;
-
-        int water = 0;
-
-        for(int i=1; i<n; i++){
-            int wt = min(leftMax, rightMax[i]) - height[i];
-            if(wt>0)water +=wt ;
-            leftMax = max(leftMax, height[i]);
+        while(l<=r){
+            if(leftMax<rightMax){
+                if(height[l] > leftMax){
+                    leftMax = height[l];
+                } else water += (leftMax - height[l]);
+                l++;
+            } else {
+                if(height[r] > rightMax){
+                    rightMax = height[r];
+                } else water += (rightMax - height[r]);
+                r--;
+            }
         }
 
         return water;
