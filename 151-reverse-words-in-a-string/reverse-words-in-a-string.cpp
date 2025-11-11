@@ -1,24 +1,24 @@
 class Solution {
 public:
     string reverseWords(string s) {
-        string ans = "";
+        reverse(s.begin(), s.end());
+        int l = s.size(), k = 0;       
 
-        for(int i = s.size() - 1; i>=0; i--){
-            // skipping zero 
-            while(i>=0 && s[i] == ' ')i--;
-            if(i<0) break;
+        for(int i = 0; i<l; i++){
+            // find the first index of a word by ignoring the blank spaces using i
+            while(i<l && s[i] == ' ')i++;
 
-            // collect a word
-            string word = "";
-            while(i>=0 && s[i] != ' '){
-                word+=s[i];
-                i--;
-            } 
-            reverse(word.begin(), word.end());
+            // add a blank space if not the first word
+            if(i != l && k>0) s[k++] = ' ';
 
-            if(!ans.empty()) ans += " ";
-            ans += word;
+            int start_idx = k;
+            // forward the word using k
+            while(i<l && s[i] != ' ') s[k++] = s[i++];
+
+            reverse(s.begin() + start_idx, s.begin() + k);
         }
-        return ans;    
+        s.resize(k);
+
+        return s;    
     }
 };
