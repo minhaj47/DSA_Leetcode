@@ -2,13 +2,11 @@ class Solution {
 public:
     vector<int> twoSum(vector<int>& numbers, int target) {
         int n = numbers.size();
-        unordered_map<int, int>mp;
-        for(int i =0; i<n; i++){
-            int complement = target - numbers[i];
-            if(mp.count(complement)){
-                return {mp[complement], i+1};
-            } 
-            mp[numbers[i]] = i+1;
+        for(int i=0, j=n-1; i<j; ){
+            if(numbers[i] == target - numbers[j]){
+                return {i + 1, j + 1};
+            } else if(numbers[i] + numbers[j] > target) j--;
+            else i++;
         }
         return {};
     }
