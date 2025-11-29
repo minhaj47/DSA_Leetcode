@@ -9,7 +9,7 @@ public:
             if(mp[nums[i]]) return true;
             mp[nums[i]]++;
 
-            if(i-start >= k){
+            if(i-start >= k){      // >= as it will be checked in the next iteration while i will be increased by 1
                 mp[nums[start]]--;
                 start++;
             }
