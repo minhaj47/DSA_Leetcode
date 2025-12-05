@@ -9,7 +9,7 @@ public:
                 if(st.empty()) return false;
                 char c = st.top();
                 st.pop();
-                if((x ==')' and c !='(') || 
+                if((x == ')' and c != '(') || 
                 (x == '}' and c != '{') || 
                 (x == ']' and c != '[')) return false;
             }
