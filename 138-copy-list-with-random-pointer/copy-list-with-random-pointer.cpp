@@ -1,42 +1,38 @@
-/*
-// Definition for a Node.
-class Node {
-public:
-    int val;
-    Node* next;
-    Node* random;
-    
-    Node(int _val) {
-        val = _val;
-        next = NULL;
-        random = NULL;
-    }
-};
-*/
-
 class Solution {
 public:
     Node* copyRandomList(Node* head) {
+        if (!head) return nullptr;
+
+        // 1. Insert copied nodes
         Node* temp = head;
-        Node* dummy = new Node(0);
-        Node* currCopied = dummy;
-
-        unordered_map<Node*, Node*>mp;
-
-        while(temp) {
+        while (temp) {
             Node* newNode = new Node(temp->val);
-            mp[temp] = newNode;
-            currCopied->next = newNode;
-
-            temp = temp->next;
-            currCopied = currCopied->next;
+            newNode->next = temp->next;
+            temp->next = newNode;
+            temp = newNode->next;
         }
 
+        // 2. Set random pointers
         temp = head;
-        while(temp) {
-            mp[temp]->random = mp[temp->random];
-            temp = temp->next;
+        while (temp) {
+            Node* copied = temp->next;
+            copied->random = temp->random ? temp->random->next : nullptr;
+            temp = copied->next;
         }
-        return mp[head];
+
+        // 3. Separate two lists
+        Node* original = head;
+        Node* copy = head->next;
+        Node* copyHead = copy;
+
+        while (original) {
+            original->next = original->next->next;
+            copy->next = (copy->next) ? copy->next->next : nullptr;
+
+            original = original->next;
+            copy = copy->next;
+        }
+
+        return copyHead;
     }
 };
