@@ -6,18 +6,27 @@
 var timeLimit = function(fn, t) {
     
     return async function(...args) {
-        return new Promise((delayedResolve, reject) => {
-            const id = setTimeout(() => reject("Time Limit Exceeded"), t);
+        // return new Promise((delayedResolve, reject) => {
+        //     const id = setTimeout(() => reject("Time Limit Exceeded"), t);
 
-            fn(...args)
-                .then((result) => {
-                    clearTimeout(id);
-                    delayedResolve(result);
-                })
-                .catch((err) => {
-                    reject(err);
-                });
-        });
+        //     fn(...args)
+        //         .then((result) => {
+        //             clearTimeout(id);
+        //             delayedResolve(result);
+        //         })
+        //         .catch((err) => {
+        //             reject(err);
+        //         });
+        // });
+
+        return Promise.race([
+            fn(...args),
+            new Promise((_, reject) => {
+                setTimeout(() => {
+                    reject("Time Limit Exceeded");
+                }, t);
+            }),
+        ])
     }
 };
 
