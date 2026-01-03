@@ -15,11 +15,20 @@ public:
         if(!p && !q) {
             return true;
         } 
-        if(p && q && p->val == q->val) {
-            bool a = isSameTree(p->left, q->left);
-            bool b = isSameTree(p->right, q->right);
-            return a && b;
-        } 
-        return false;
+        queue<pair<TreeNode*, TreeNode*>> qu;
+        qu.push({p, q});
+
+        while(!qu.empty()) {
+            auto [a, b] = qu.front();
+            qu.pop();
+
+            if(!a && !b) continue;
+            if(!a || !b) return false;
+            if(a->val != b->val) return false;
+
+            qu.push({a->left, b->left});
+            qu.push({a->right, b->right});
+        }
+        return true;
     }
 };
