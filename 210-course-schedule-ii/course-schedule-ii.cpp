@@ -4,8 +4,8 @@ public:
         vector<vector<int>>graph(numCourses);
 
         for(auto p: prerequisites) {
-            int course = p[1];
-            int pre = p[0];
+            int course = p[0];
+            int pre = p[1];
             graph[pre].push_back(course);
         }
 
@@ -15,6 +15,7 @@ public:
         for(int i=0; i<numCourses; i++) {
             if(!visited[i])dfs(i, visited, graph, ans);
         }
+        reverse(ans.begin(), ans.end());
         return isCycle ? vector<int>() : ans;
     }
 
